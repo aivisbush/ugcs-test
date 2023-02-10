@@ -6,7 +6,7 @@ pipeline {
             agent { node { label 'MAC' }}
             steps {
                 echo 'Testing..'
-                sh 'echo $PATH'
+                sh 'env'
             }
         }
         stage('Build') {
