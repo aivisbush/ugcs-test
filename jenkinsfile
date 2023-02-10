@@ -2,6 +2,13 @@ pipeline {
     agent any
 
     stages {
+        stage('Test') {
+            agent { node { label 'MAC' }}
+            steps {
+                echo 'Testing..'
+                sh 'echo $PATH'
+            }
+        }
         stage('Build') {
             agent {
                 docker {
@@ -11,12 +18,6 @@ pipeline {
             }
             steps {
                 sh 'cat /etc/os-release'
-            }
-        }
-        stage('Test') {
-            agent { node { label 'master' }}
-            steps {
-                echo 'Testing..'
             }
         }
         stage('Deploy') {
