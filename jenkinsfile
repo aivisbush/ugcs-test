@@ -1,18 +1,26 @@
 pipeline {
-    agent any
+    agent none
 
     stages {
         stage('Build') {
+            agent {
+                docker {
+                    image 'bellsoft/liberica-openjdk-alpine'
+                    label 'MAC'
+                }
+            }
             steps {
-                echo 'Building..'
+                sh 'cat /etc/os-release'
             }
         }
         stage('Test') {
+            agent { node { label 'master' }}
             steps {
                 echo 'Testing..'
             }
         }
         stage('Deploy') {
+            agent { node { label 'master' }}
             steps {
                 echo 'Deploying....'
             }
