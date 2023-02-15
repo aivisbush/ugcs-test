@@ -9,15 +9,34 @@ pipeline {
                 sh 'env'
             }
         }
-        stage('Build') {
+        stage('Building') {
             agent {
                 docker {
-                    image 'bellsoft/liberica-openjdk-alpine'
-                    label 'MAC'
+                    image 'ugcs-client-build-env'
+                    label 'ubuntu-mac'
                 }
             }
             steps {
-                sh 'cat /etc/os-release'
+                script {
+                    sh '''
+                        SOURCE_PATH=/mnt/ugcs/src
+                        BUILD_PATH=/root
+                        build_type_client=Release
+                        unity_license=/mnt/ugcs/src/build-scripts/Unity_v2021.x.ulf
+                        if [ "${env.create_windows_build}" = "true" ]
+                        then
+                            sh $SOURCE_PATH/build-scripts/build_client_docker.sh -s $SOURCE_PATH -b $BUILD_PATH -t $build_type_client -p win -l $unity_license
+                        fi
+                        if [ "${env.create_mac_os_build}" = "true" ]
+                        then
+                            sh $SOURCE_PATH/build-scripts/build_client_docker.sh -s $SOURCE_PATH -b $BUILD_PATH -t $build_type_client -p mac -l $unity_license
+                        fi
+                        if [ "${env.create_linux_build}" = "true" ]
+                        then
+                            sh $SOURCE_PATH/build-scripts/build_client_docker.sh -s $SOURCE_PATH -b $BUILD_PATH -t $build_type_client -p linux -l $unity_license
+                        fi
+                    '''
+                }
             }
         }
         stage('Deploy') {
