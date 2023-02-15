@@ -2,13 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Test') {
-            agent { node { label 'ubuntu-mac' }}
-            steps {
-                echo 'Testing..'
-                sh 'env'
-            }
-        }
         stage('Building') {
             agent {
                 docker {
@@ -23,26 +16,9 @@ pipeline {
                         BUILD_PATH=/root
                         build_type_client=Release
                         unity_license=/mnt/ugcs/src/build-scripts/Unity_v2021.x.ulf
-                        if [ "${env.create_windows_build}" = "true" ]
-                        then
-                            sh $SOURCE_PATH/build-scripts/build_client_docker.sh -s $SOURCE_PATH -b $BUILD_PATH -t $build_type_client -p win -l $unity_license
-                        fi
-                        if [ "${env.create_mac_os_build}" = "true" ]
-                        then
-                            sh $SOURCE_PATH/build-scripts/build_client_docker.sh -s $SOURCE_PATH -b $BUILD_PATH -t $build_type_client -p mac -l $unity_license
-                        fi
-                        if [ "${env.create_linux_build}" = "true" ]
-                        then
-                            sh $SOURCE_PATH/build-scripts/build_client_docker.sh -s $SOURCE_PATH -b $BUILD_PATH -t $build_type_client -p linux -l $unity_license
-                        fi
+                        sh $SOURCE_PATH/build-scripts/build_client_docker.sh -s $SOURCE_PATH -b $BUILD_PATH -t $build_type_client -p win -l $unity_license
                     '''
                 }
-            }
-        }
-        stage('Deploy') {
-            agent { node { label 'master' }}
-            steps {
-                echo 'Deploying....'
             }
         }
     }
