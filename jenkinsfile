@@ -3,7 +3,7 @@ pipeline {
 
     stages {
         stage('Test') {
-            agent { node { label 'MAC' }}
+            agent { node { label 'ubuntu-mac' }}
             steps {
                 echo 'Testing..'
                 sh 'env'
