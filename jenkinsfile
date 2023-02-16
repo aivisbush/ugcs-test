@@ -17,6 +17,7 @@ pipeline {
                         BUILD_PATH=/root
                         build_type_client=Release
                         unity_license=/mnt/ugcs/src/build-scripts/Unity_v2021.x.ulf
+                        DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
                         sh $SOURCE_PATH/build-scripts/build_client_docker.sh -s $SOURCE_PATH -b $BUILD_PATH -t $build_type_client -p win -l $unity_license
                     '''
                 }
