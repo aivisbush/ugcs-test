@@ -12,7 +12,7 @@ pipeline {
             }
             steps {
                 script {
-                    env.build_type='mac'
+                    env.build_type='win'
                     env.SOURCE_PATH='/mnt/ugcs/src'
                     env.BUILD_PATH='/root/build'
                     env.build_type_client='Release'
