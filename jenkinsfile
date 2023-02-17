@@ -7,14 +7,14 @@ pipeline {
                 docker {
                     image 'ugcs-client-build-env'
                     label 'ubuntu-mac'
-                    args '-u root --privileged -v /mnt/ugcs:/mnt/ugcs'
+                    args '-u root --privileged -v /mnt/ugcs/ugcs:/mnt/ugcs'
                 }
             }
             steps {
                 script {
                     env.build_type='mac'
                     env.SOURCE_PATH='/mnt/ugcs/src'
-                    env.BUILD_PATH='/root'
+                    env.BUILD_PATH='/root/build'
                     env.build_type_client='Release'
                     env.unity_license='/mnt/ugcs/src/build-scripts/Unity_v2021.x.ulf'
                     if (env.client_type == 'win') {
