@@ -12,11 +12,11 @@ pipeline {
             }
             steps {
                 script {
-                    env.build_type = 'mac'
-                    env.SOURCE_PATH=/mnt/ugcs/src
-                    env.BUILD_PATH=/root
-                    env.build_type_client=Release
-                    env.unity_license=/mnt/ugcs/src/build-scripts/Unity_v2021.x.ulf
+                    env.build_type='mac'
+                    env.SOURCE_PATH='/mnt/ugcs/src'
+                    env.BUILD_PATH='/root'
+                    env.build_type_client='Release'
+                    env.unity_license='/mnt/ugcs/src/build-scripts/Unity_v2021.x.ulf'
                     if (env.client_type == 'win') {
                         sh "${SOURCE_PATH}/build-scripts/build_client_docker.sh -s ${SOURCE_PATH} -b ${BUILD_PATH} -t ${build_type_client} -p win -l ${unity_license}"
                     }
