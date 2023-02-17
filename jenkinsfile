@@ -12,13 +12,22 @@ pipeline {
             }
             steps {
                 script {
+                    env.build_type = 'mac'
                     sh '''
-                        SOURCE_PATH=/mnt/ugcs/src
-                        BUILD_PATH=/root
-                        build_type_client=Release
-                        unity_license=/mnt/ugcs/src/build-scripts/Unity_v2021.x.ulf
-                        sh $SOURCE_PATH/build-scripts/build_client_docker.sh -s $SOURCE_PATH -b $BUILD_PATH -t $build_type_client -p mac -l $unity_license
+                        export SOURCE_PATH=/mnt/ugcs/src
+                        export BUILD_PATH=/root
+                        export build_type_client=Release
+                        export unity_license=/mnt/ugcs/src/build-scripts/Unity_v2021.x.ulf
                     '''
+                    if (env.client_type == 'win') {
+                        sh "$SOURCE_PATH/build-scripts/build_client_docker.sh -s $SOURCE_PATH -b $BUILD_PATH -t $build_type_client -p win -l $unity_license"
+                    }
+                    if (env.build_type == 'mac') {
+                        sh "$SOURCE_PATH/build-scripts/build_client_docker.sh -s $SOURCE_PATH -b $BUILD_PATH -t $build_type_client -p mac -l $unity_license"
+                    }
+                    if (env.build_type == 'linux') {
+                        sh "$SOURCE_PATH/build-scripts/build_client_docker.sh -s $SOURCE_PATH -b $BUILD_PATH -t $build_type_client -p linux -l $unity_license"
+                    }
                 }
             }
         }
