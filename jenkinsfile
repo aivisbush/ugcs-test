@@ -6,8 +6,8 @@ pipeline {
             agent {
                 docker {
                     image 'ugcs-client-build-env'
-                    label 'ubuntu-mac'
-                    args '-u root --privileged -v /mnt/ugcs/ugcs:/mnt/ugcs'
+                    label 'ubuntu-win'
+                    args '-u root --privileged -v /mnt/ugcs:/mnt/ugcs'
                 }
             }
             steps {
